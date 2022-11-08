@@ -11,14 +11,24 @@ public class ByteBankInitializer {
     }
 
     private static void validarAcesso() {
-        System.out.print("""
-                        Possui conta?:
-                        1 - Sim
-                        2 - Não
-                """);
         Scanner scanner = new Scanner(System.in);
-        var opcaoSelecionada = Integer.parseInt(scanner.next());
-        new ContaService().validar(opcaoSelecionada);
+        System.out.print("""
+                        Informe o número da agência:
+                        """);
+        scanner.next();
+        System.out.print("""
+                        Informe o número da conta:
+                        """);
+        var numeroConta = Integer.parseInt(scanner.next());
+        var contaService = new ContaService();
+        var conta = contaService.buscar(numeroConta);
+        if(conta.isEmpty()) {
+            System.out.println("""
+                    Conta não existe!!""");
+            contaService.criar(numeroConta);
+        } else {
+            System.out.println("Seja vem vindo(a)");
+        }
     }
 
     private static void selecionarOperacao() {
@@ -26,7 +36,7 @@ public class ByteBankInitializer {
                         Selecione a opção:
                         1 - Sacar
                         2 - Depositar
-                """);
+                        """);
 
         Scanner scanner = new Scanner(System.in);
         var opcaoSelecionada = Integer.parseInt(scanner.next());

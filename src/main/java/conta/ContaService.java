@@ -1,37 +1,16 @@
 package conta;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class ContaService {
 
-    public void validar(Integer opcao) {
-        switch (opcao) {
-            case 1 -> this.acessar();
-            case 2 -> this.criar();
-        }
+    public Optional<Conta> buscar(Integer conta) {
+        return listaDeContas().stream().filter(c -> c.getConta().equals(conta)).findFirst();
     }
 
-    private void acessar() {
-        System.out.print("""
-                        Informe o número da agência:
-                """);
-        Scanner scanner = new Scanner(System.in);
-        scanner.next();
-        System.out.print("""
-                        Informe o número da conta:
-                """);
-        var conta = pegarConta(Integer.parseInt(scanner.next()));
-        System.out.printf("""
-                        Voce está logado na conta %s
-                """, conta.getConta());
-    }
-
-    private void criar() {
-        var contaCriada = new Conta(1226, new Random().nextInt(0, 200));
-        adicionarConta(contaCriada);
+    public void criar(Integer numeroConta) {
+        var contaCriada = new Conta(1226, numeroConta);
+        adicionar(contaCriada);
         System.out.printf("""
                 Conta Criada!!
                 Agência: %s
@@ -39,11 +18,7 @@ public class ContaService {
                 %n""", contaCriada.getAgencia(), contaCriada.getConta());
     }
 
-    private Conta pegarConta(Integer conta) {
-        return listaDeContas().stream().filter(c -> c.getConta().equals(conta)).findFirst().orElseThrow();
-    }
-
-    private void adicionarConta(Conta conta) {
+    private void adicionar(Conta conta) {
         listaDeContas().add(conta);
     }
 
