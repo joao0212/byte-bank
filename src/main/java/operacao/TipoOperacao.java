@@ -4,9 +4,7 @@ enum TipoOperacao {
 
     SACAR(1),
 
-    DEPOSITAR(2),
-
-    TRANSFERIR(3);
+    DEPOSITAR(2);
 
     final Integer tipo;
 

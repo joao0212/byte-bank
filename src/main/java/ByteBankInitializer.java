@@ -26,11 +26,10 @@ public class ByteBankInitializer {
                         Selecione a opção:
                         1 - Sacar
                         2 - Depositar
-                        3 - Transferir
                 """);
 
         Scanner scanner = new Scanner(System.in);
-        var operacaoService = new OperacaoService();
-        operacaoService.realizarOperacao(Integer.parseInt(scanner.next()));
+        var opcaoSelecionada = Integer.parseInt(scanner.next());
+        new OperacaoService().realizarOperacao(opcaoSelecionada);
     }
 }
