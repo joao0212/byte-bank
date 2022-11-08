@@ -7,7 +7,7 @@ public class ByteBankInitializer {
 
     public static void main(String... x) {
         validarAcesso();
-        realizarOperacao();
+        selecionarOperacao();
     }
 
     private static void validarAcesso() {
@@ -18,14 +18,10 @@ public class ByteBankInitializer {
                 """);
         Scanner scanner = new Scanner(System.in);
         var opcaoSelecionada = Integer.parseInt(scanner.next());
-        var contaService = new ContaService();
-        switch (opcaoSelecionada) {
-            case 1 -> contaService.acessar();
-            case 2 -> contaService.criar();
-        }
+        new ContaService().validar(opcaoSelecionada);
     }
 
-    private static void realizarOperacao() {
+    private static void selecionarOperacao() {
         System.out.print("""
                         Selecione a opção:
                         1 - Sacar
@@ -35,7 +31,6 @@ public class ByteBankInitializer {
 
         Scanner scanner = new Scanner(System.in);
         var operacaoService = new OperacaoService();
-        var operacaoSelecionada = operacaoService.buscaPorValor(Integer.parseInt(scanner.next()));
-        operacaoService.realizarOperacao(operacaoSelecionada);
+        operacaoService.realizarOperacao(Integer.parseInt(scanner.next()));
     }
 }

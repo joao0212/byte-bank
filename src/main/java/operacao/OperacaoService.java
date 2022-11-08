@@ -6,18 +6,17 @@ public class OperacaoService {
 
     private Operacao operacao;
 
-    public void realizarOperacao(TipoOperacao operacaoSelecionada) {
-        switch (operacaoSelecionada) {
+    public void realizarOperacao(Integer opcao) {
+        switch (buscarTipoPorValor(opcao)) {
             case SACAR -> operacao = new Saca();
             case DEPOSITAR -> operacao = new Deposita();
-            case TRANSFERIR -> operacao = new Transfere();
         }
         operacao.realizar();
     }
 
-    public TipoOperacao buscaPorValor(Integer tipo) {
+    private TipoOperacao buscarTipoPorValor(Integer opcao) {
         return Arrays.stream(TipoOperacao.values())
-                .filter(tipoOperacao -> tipoOperacao.tipo.equals(tipo))
+                .filter(tipoOperacao -> tipoOperacao.tipo.equals(opcao))
                 .findFirst()
                 .orElseThrow();
     }
