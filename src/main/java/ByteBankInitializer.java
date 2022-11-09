@@ -24,8 +24,16 @@ public class ByteBankInitializer {
         var conta = contaService.buscar(numeroConta);
         if(conta.isEmpty()) {
             System.out.println("""
-                    Conta não existe!!""");
-            contaService.criar(numeroConta);
+                    Conta não existe!!
+                    
+                    Informe seu nome:
+                    """);
+            var nome = scanner.next();
+            System.out.println("""
+                    Informe seu sobrenome:
+                    """);
+            var sobrenome = scanner.next();
+            contaService.criar(numeroConta, nome, sobrenome);
         } else {
             System.out.println("Seja vem vindo(a)");
         }
