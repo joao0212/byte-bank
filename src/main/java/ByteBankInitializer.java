@@ -1,16 +1,17 @@
 import conta.ContaService;
 import operacao.*;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class ByteBankInitializer {
 
-    public static void main(String... x) {
+    public static void main(String... x) throws SQLException {
         validarAcesso();
         selecionarOperacao();
     }
 
-    private static void validarAcesso() {
+    private static void validarAcesso() throws SQLException {
         Scanner scanner = new Scanner(System.in);
         System.out.print("""
                         Informe o número da agência:
