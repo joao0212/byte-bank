@@ -1,22 +1,19 @@
+import conta.Conta;
 import conta.ContaService;
 import operacao.*;
 
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class ByteBankInitializer {
 
-    public static void main(String... x) throws SQLException {
-        validarAcesso();
-        selecionarOperacao();
+    public static void main(String... x) {
+        var byteBankInitializer = new ByteBankInitializer();
+        var conta = byteBankInitializer.validarAcesso();
+        byteBankInitializer.selecionarOperacao(conta);
     }
 
-    private static void validarAcesso() throws SQLException {
+    private Conta validarAcesso() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("""
-                        Informe o número da agência:
-                        """);
-        scanner.next();
         System.out.print("""
                         Informe o número da conta:
                         """);
@@ -34,13 +31,14 @@ public class ByteBankInitializer {
                     Informe seu sobrenome:
                     """);
             var sobrenome = scanner.next();
-            contaService.criar(numeroConta, nome, sobrenome);
+            return contaService.criar(numeroConta, nome, sobrenome);
         } else {
             System.out.println("Seja vem vindo(a)");
         }
+        return conta.get();
     }
 
-    private static void selecionarOperacao() {
+    private void selecionarOperacao(Conta conta) {
         System.out.print("""
                         Selecione a opção:
                         1 - Sacar
@@ -49,6 +47,11 @@ public class ByteBankInitializer {
 
         Scanner scanner = new Scanner(System.in);
         var opcaoSelecionada = Integer.parseInt(scanner.next());
-        new OperacaoService().realizarOperacao(opcaoSelecionada);
+        System.out.println("""
+                Insira o valor da operação:
+                """);
+        var valor = scanner.next();
+        var operacaoService = new OperacaoService();
+        operacaoService.realizarOperacao(opcaoSelecionada, conta, Integer.parseInt(valor));
     }
 }

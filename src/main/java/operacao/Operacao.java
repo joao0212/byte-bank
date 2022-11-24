@@ -1,6 +1,8 @@
 package operacao;
 
+import conta.Conta;
+
 interface Operacao {
 
-    void realizar();
+    void realizar(Conta conta, Integer valor);
 }

@@ -9,33 +9,32 @@ import java.util.*;
 
 public class ContaService {
 
-    private final Connection connection;
+    private final ContaDAO contaDAO;
 
     public ContaService() {
-        this.connection = new ConnectionFactory().getConnection();
+        Connection connection = new ConnectionFactory().getConnection();
+        this.contaDAO = new ContaDAO(connection);
     }
 
     public Optional<Conta> buscar(Integer conta) {
-        try {
-            System.out.println("Conectei");
-            connection.close();
-        } catch (Exception e) {
-            throw new RuntimeException();
-        }
-
-        return Optional.empty();//listaDeContas().stream().filter(c -> c.getConta().equals(conta)).findFirst();
+        return contaDAO.buscarPorConta(conta);
     }
 
-    public void criar(Integer numeroConta, String nome, String sobrenome) {
-        var contaDefault = 12262;
+    public Conta criar(Integer numeroConta, String nome, String sobrenome) {
+        var agenciaDefault = 12262;
         var usuarioService = new UsuarioService();
         var usuarioValidado = usuarioService.validarUsuario(new Usuario(nome, sobrenome));
-        var contaDAO = new ContaDAO(connection);
-        contaDAO.salvar(new Conta(contaDefault, numeroConta, usuarioValidado));
+        var novaConta = new Conta(agenciaDefault, numeroConta, 0);
+        novaConta.setUsuario(usuarioValidado);
         System.out.printf("""
                 Conta Criada, %s!!
                 Agência: %s
                 Conta: %s
-                %n""", usuarioValidado.getNome(), contaDefault, numeroConta);
+                %n""", usuarioValidado.getNome(), agenciaDefault, numeroConta);
+        return contaDAO.salvar(novaConta);
+    }
+
+    public void update(Conta conta, Integer valor) {
+        contaDAO.update(conta, valor);
     }
 }
